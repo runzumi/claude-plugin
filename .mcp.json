@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "runzumi": {
+      "type": "http",
+      "url": "https://mcp.runzumi.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "runzumi",
+  "displayName": "Runzumi",
+  "version": "0.1.0",
+  "description": "Analyze GitHub Actions runners in Runzumi: job duration, queue time, success rate, compute costs and CI failure logs.",
+  "author": {
+    "name": "Runzumi",
+    "email": "contact@runzumi.com"
+  },
+  "homepage": "https://runzumi.com",
+  "repository": "https://github.com/runzumi/claude-plugin",
+  "license": "MIT",
+  "keywords": ["github-actions", "github-actions-runners", "ci-cd", "ci-performance", "ci-costs", "compute-usage", "build-failures", "build-logs"],
+  "icon": "./icon.png",
+  "supportUrl": "https://runzumi.com/support",
+  "privacyPolicyUrl": "https://runzumi.com/privacy",
+  "termsOfServiceUrl": "https://runzumi.com/terms"
+}
