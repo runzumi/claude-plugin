@@ -1,0 +1,15 @@
+{
+  "name": "runzumi",
+  "description": "The Runzumi plugin for analyzing GitHub Actions runners.",
+  "owner": {
+    "name": "Runzumi",
+    "email": "contact@runzumi.com"
+  },
+  "plugins": [
+    {
+      "name": "runzumi",
+      "source": "./",
+      "description": "Analyze GitHub Actions runners in Runzumi: job duration, queue time, success rate, compute costs and CI failure logs."
+    }
+  ]
+}

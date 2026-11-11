@@ -9,6 +9,23 @@ The plugin is for analytics and investigation. It can't start, cancel or change 
 1. [Create a Runzumi account](https://app.runzumi.com/onboarding), then create or join a workspace and connect GitHub.
 2. Install this plugin and sign in with your Runzumi account when Claude asks.
 
+## Install
+
+In Claude Code 2.1.275 or later, run:
+
+```
+/plugin install runzumi --marketplace runzumi/claude-plugin
+```
+
+In earlier versions, add the marketplace first, then install the plugin:
+
+```
+/plugin marketplace add runzumi/claude-plugin
+/plugin install runzumi@runzumi
+```
+
+From a terminal, use `claude plugin marketplace add runzumi/claude-plugin` and `claude plugin install runzumi@runzumi`.
+
 ## Skills
 
 - [connect-runzumi](skills/connect-runzumi/SKILL.md): connect Runzumi, find your workspace and open the dashboard.
