@@ -1,7 +1,7 @@
 {
   "name": "runzumi",
   "displayName": "Runzumi",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Analyze GitHub Actions runners in Runzumi: job duration, queue time, success rate, compute costs and CI failure logs.",
   "author": {
     "name": "Runzumi",

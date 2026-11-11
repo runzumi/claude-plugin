@@ -9,11 +9,27 @@ The plugin is for analytics and investigation. It can't start, cancel or change 
 1. [Create a Runzumi account](https://app.runzumi.com/onboarding), then create or join a workspace and connect GitHub.
 2. Install this plugin and sign in with your Runzumi account when Claude asks.
 
+## Skills
+
+- [connect-runzumi](skills/connect-runzumi/SKILL.md): connect Runzumi, find your workspace and open the dashboard.
+- [explain-ci-slowness](skills/explain-ci-slowness/SKILL.md): find out why CI is slow by comparing job duration, queue time and job attempts.
+- [explain-compute-costs](skills/explain-compute-costs/SKILL.md): explain compute usage and costs for a workspace, a repository or a job.
+- [investigate-failure](skills/investigate-failure/SKILL.md): find out why a GitHub Actions job failed from its details and logs.
+- [choose-runner-size](skills/choose-runner-size/SKILL.md): choose a `runs-on` label and runner size, or check if a larger runner would help.
+
 ## Try asking
 
 - Show job duration, queue time and success rate for my repository this week.
 - Why did my GitHub Actions job fail? Use its details and logs.
 - Show my workspace's compute usage and costs for the last 31 days.
+
+## What the plugin connects to
+
+The plugin connects to one remote MCP server, `https://mcp.runzumi.com/mcp`. You sign in with your Runzumi account through Claude's OAuth flow. The plugin never asks you for passwords or tokens.
+
+The plugin ships instructions only. It runs no local code or scripts.
+
+The server reads workspace, repository, job, usage and log data that your Runzumi account can access. It can save display preferences, such as a default workspace or repository. Log excerpts enter the conversation only when you ask for them. The plugin can't start, cancel or change CI jobs.
 
 ## Links
 
