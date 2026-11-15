@@ -18,9 +18,10 @@ All Runzumi runners are Ubuntu 24.04 on x64. Use the exact label in `runs-on`.
 | `runzumi-ubuntu-24.04-x64-8` | large | 8 | 16 GiB | 1.44 cents |
 
 - `standard` is the default profile.
-- 8 vCPU is the largest size. There is no `-16`, `-32` or `-64` label. Do not write one: a job with an unknown label never gets a Runzumi runner.
+- 8 vCPU is the largest size to recommend by default. There is no `-32` or `-64` label. Do not write one: a job with an unknown label never gets a Runzumi runner.
+- A 16 vCPU, 32 GiB runner with a `-16` label is being released. It is billed as 18 vCPUs: $0.0324 per minute, 2.25 times the 8 vCPU runner. Recommend the `-16` label only if a Runzumi tool result has `compatibility.contractVersion` of `0.1.6` or later. A repository's `profiles` shows the sizes it has used, so a missing `-16` there does not show that the size is unavailable.
 - There are no ARM, GPU, macOS or Windows runners.
-- Billing is per vCPU-second, by the second, with a 20-second minimum for each VM. The list prices use price version 2026-10-04-v2. For the real cost of a job, use `get_run` or `get_usage`; see the [compute cost guide](../explain-compute-costs/SKILL.md).
+- Billing is per billed vCPU-second, by the second, with a 20-second minimum for each VM. Billed vCPUs equal the vCPU column for the sizes above. The list prices in the table are the same under price version 2026-10-04-v2 and price version 2026-11-10-v3. Price version 2026-11-10-v3 has one rate at every volume. Jobs admitted under older price versions keep the rate bands of those versions. For the real cost of a job, use `get_run` or `get_usage`; see the [compute cost guide](../explain-compute-costs/SKILL.md).
 
 Public references: https://runzumi.com/llms.txt and https://runzumi.com/runners.json.
 
@@ -65,10 +66,11 @@ jobs:
 - **2 vCPU, 4 GiB:** lint, formatting, small scripts, deploy steps and jobs that mostly wait for the network.
 - **4 vCPU, 8 GiB:** most builds and test suites. Start here when you do not know.
 - **8 vCPU, 16 GiB:** compiles that use all cores (for example Rust, C++ or large TypeScript builds), Docker image builds, and test runners with many parallel workers.
+- **16 vCPU, 32 GiB:** only under the `-16` rule above, for work that uses all 16 cores or more than 16 GiB of memory.
 - **Parallel workers:** a larger runner helps only if the tool uses the extra cores. Check the worker setting (for example Jest `--maxWorkers`, Vitest `--maxWorkers`, `pytest -n`, `make -j`, `cargo build -j`). Match it to `nproc`.
-- **Memory:** memory is 2 GiB for each vCPU. If a job runs out of memory at 8 GiB, use the 8 vCPU label. If it needs more than 16 GiB, no Runzumi size is larger: use fewer parallel workers, lower the memory use, or split the job.
-- **More than 8 vCPU:** split the work into shards in a matrix. Each shard uses its own 8 vCPU runner.
-- **Cost:** cost is vCPU multiplied by billed seconds. A job on 8 vCPU costs the same as on 4 vCPU only if it finishes in half the time.
+- **Memory:** memory is 2 GiB for each vCPU. If a job runs out of memory at 8 GiB, use the 8 vCPU label. If it needs more than 16 GiB, use the `-16` label if the `-16` rule above allows it (32 GiB). Otherwise no Runzumi size is larger: use fewer parallel workers, lower the memory use, or split the job.
+- **More than 8 vCPU:** split the work into shards in a matrix. Each shard uses its own 8 vCPU runner. Use the `-16` label instead only under the `-16` rule above.
+- **Cost:** cost is billed vCPUs multiplied by billed seconds and the rate. At the same rate, a job on 8 vCPU costs the same as on 4 vCPU only if its billed time is half as long. A job on the 16 vCPU runner costs the same as on 8 vCPU only with four ninths of the billed time, because it is billed as 18 vCPUs. Billed time includes the VM's start, idle and cleanup time and the 20-second minimum, so it can shrink less than the job's run time.
 
 ## Check with data before you change the size
 

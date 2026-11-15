@@ -18,12 +18,12 @@ For workspace spending, the normal path is `list_workspaces` followed by one `ge
 Call `get_usage` once for the selected workspace scope. Supply `repositoryId` only when the question names one repository. It has no date filter. It returns the last 31 days. Each row has only `day`, `vcpuSeconds`, `costUnits` and `jobs`. Rows have no billing model and no settlement state. Do not add them.
 
 - **3,000,000 `costUnits` = 1 USD.** Add the units first. Then change them to dollars. Round only for display.
-- `vcpuSeconds` / 3,600 = vCPU-hours. This is not job time.
+- `vcpuSeconds` / 3,600 = billed vCPU-hours. This is not job time, and it is not hardware vCPU-hours: a 16 vCPU runner adds 18 for each wall second.
 - A missing row does not mean zero usage. A null cost is not a zero cost.
 - `dailySpendLimitCents` is a limit in cents. It is not spend.
 - Keep the day boundaries that the tool returns. Tell the user the dates that you used. Mark the current day as a part day.
 
-To compare, use two periods of the same length with full days only. The default is the last 7 full days and the 7 full days before them. Give the dates, job count, vCPU-hours and cost. If the first period is zero, a percent change has no meaning. A higher cost for each job can come from different jobs. It does not prove a price increase.
+To compare, use two periods of the same length with full days only. The default is the last 7 full days and the 7 full days before them. Give the dates, job count, billed vCPU-hours and cost. If the first period is zero, a percent change has no meaning. A higher cost for each job can come from different jobs. It does not prove a price increase.
 
 For a forecast, derive the daily rate from full days in this response (normally the last 7 full days). State the observed window, exclude the current partial day, and disclose the constant-rate assumption and projection end date. Project only the requested period; do not imply that a 31-day response establishes year-to-date spend. No additional data calls are needed for forecast arithmetic.
 
@@ -43,6 +43,8 @@ Use `list_runs` for the repository and time range. Then use `get_run` for the at
 
 - Look at `costUnits`, `settled`, the runner profile, timestamps and retries.
 - Keep the `billingBasis` and `billedVcpuSeconds` of the job. Do not replace them with current workspace values.
+- Billed time = `billedVcpuSeconds` / billed vCPUs. Billed vCPUs are 2, 4 and 8 for those runners and 18 for the 16 vCPU runner. Never divide by the number in the label.
+- `costUnits` was priced under the job's own price version, which the tools do not return. Do not recompute a past job from the list prices. Price version 2026-11-10-v3 has one rate at every volume. Jobs admitted under 2026-09-29-v1 or 2026-10-04-v2 keep the graduated rate bands of those versions. Do not promise a volume discount for future jobs. A lower effective rate on a past job can come from those bands.
 - `billingResolution` shows how Runzumi calculated the cost: `checkpoint_estimate` (estimate from checkpoints), `vm_timing` (VM time), `job_execution` (job run time) or `write_off` (written off).
 - A completed job is not always settled.
 - Match a GitHub run URL with `githubRunId`, the workflow or job name and `attempt`. Use only the Runzumi `id` as `jobId`. Do not count a job two times.
