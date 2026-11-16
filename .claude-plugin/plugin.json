@@ -12,6 +12,7 @@
   "license": "MIT",
   "keywords": ["github-actions", "github-actions-runners", "ci-cd", "ci-performance", "ci-costs", "compute-usage", "build-failures", "build-logs"],
   "icon": "./icon.png",
+  "documentationUrl": "https://runzumi.com/claude",
   "supportUrl": "https://runzumi.com/support",
   "privacyPolicyUrl": "https://runzumi.com/privacy",
   "termsOfServiceUrl": "https://runzumi.com/terms"
